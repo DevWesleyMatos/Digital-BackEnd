@@ -18,7 +18,7 @@ const db = new Pool ({
 app.get("/status", async (req,res) => {
     try {
         const data = await db.query("SELECT * FROM status")
-        res.status(200).send(data)
+        res.status(200).send(data.rows)
     } catch (error) {
         res.status(500).send(error)
     }
