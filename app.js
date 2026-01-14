@@ -14,10 +14,19 @@ const db = new Pool ({
     connectionString:process.env.DATABASE_URL
 })
 
-
 app.get("/status", async (req,res) => {
     try {
         const data = await db.query("SELECT * FROM status")
+        res.status(200).send(data.rows)
+    } catch (error) {
+        res.status(500).send(error)
+    }
+})
+
+app.get("/status/:id", async (req,res) => {
+    try {
+        let id = req.params.id
+        const data = await db.query(`SELECT * FROM status WHERE id = ${id}`)
         res.status(200).send(data.rows)
     } catch (error) {
         res.status(500).send(error)
