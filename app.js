@@ -33,6 +33,16 @@ app.get("/status/:id", async (req,res) => {
     }
 })
 
+app.post("/status", async (req,res) => {
+    try {
+        let {name}  = req.body        
+        const data = await db.query(`INSERT INTO status(name) VALUES (${name})`)
+        res.status(200).send(data.rows)
+    } catch (error) {
+        res.status(500).send(error)
+    }
+})
+
 
 app.listen(3300,()=> {
     console.log(`Aplicação rodando na porta ${PORT}`);
