@@ -5,16 +5,16 @@ import pkg from 'pg'
 import bodyParser from 'body-parser'
 
 dotenv.config()
-const app = express() 
-const PORT= process.env.PORT
+const app = express()
+const PORT = process.env.PORT
 app.use(bodyParser.json())
 const { Pool } = pkg
 
-const db = new Pool ({
-    connectionString:process.env.DATABASE_URL
+const db = new Pool({
+    connectionString: process.env.DATABASE_URL
 })
 
-app.get("/status", async (req,res) => {
+app.get("/status", async (req, res) => {
     try {
         const data = await db.query("SELECT * FROM status")
         res.status(200).send(data.rows)
@@ -23,7 +23,7 @@ app.get("/status", async (req,res) => {
     }
 })
 
-app.get("/status/:id", async (req,res) => {
+app.get("/status/:id", async (req, res) => {
     try {
         let id = req.params.id
         const data = await db.query(`SELECT * FROM status WHERE id = ${id}`)
@@ -33,10 +33,13 @@ app.get("/status/:id", async (req,res) => {
     }
 })
 
-app.post("/status", async (req,res) => {
+app.post("/status", async (req, res) => {
     try {
-        let {name}  = req.body        
-        const data = await db.query(`INSERT INTO status(name) VALUES (${name})`)
+        let { name } = req.body
+        const data = await db.query(
+            "INSERT INTO status(name) VALUES ($1) RETURNING *",
+            [name]
+        );
         res.status(200).send(data.rows)
     } catch (error) {
         res.status(500).send(error)
@@ -44,6 +47,6 @@ app.post("/status", async (req,res) => {
 })
 
 
-app.listen(3300,()=> {
+app.listen(3300, () => {
     console.log(`Aplicação rodando na porta ${PORT}`);
 })
