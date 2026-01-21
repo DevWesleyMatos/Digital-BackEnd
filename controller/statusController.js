@@ -20,3 +20,13 @@ export const show = async (req , res ) => {
         res.status(500).send(error)
     }
 }
+
+export const create = async (req , res ) => {
+    try{
+         let {name} = req.body
+         const data = await statusRepository.create(name) 
+         res.status(200).send(data.rows)
+    } catch (error) {
+        res.status(500).send(error)
+    }
+}
