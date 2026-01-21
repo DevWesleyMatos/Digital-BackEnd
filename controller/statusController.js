@@ -30,3 +30,22 @@ export const create = async (req , res ) => {
         res.status(500).send(error)
     }
 }
+export const update = async (req , res ) => {
+    try{
+         let {id} = req.params
+         let {name} = req.body
+         const data = await statusRepository.update(id,name) 
+         res.status(200).send("Status atualizado com sucesso")
+    } catch (error) {
+        res.status(500).send(error)
+    }
+}
+export const destroy = async (req , res ) => {
+    try{
+         let {id} = req.params
+         const data = await statusRepository.destroy(id) 
+         res.status(204).send("Status deletado com sucesso")
+    } catch (error) {
+        res.status(500).send(error)
+    }
+}

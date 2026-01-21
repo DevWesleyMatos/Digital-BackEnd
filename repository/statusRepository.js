@@ -17,3 +17,14 @@ export const create = async (name) => {
         );
     return results
 }
+
+export const update = async (id,name) => {
+    const results = db.query("UPDATE status SET name = ($1) WHERE id = ($2)", [name,id])
+    return results
+}
+
+
+export const destroy = async (id) => {
+    const results = await db.query(`DELETE FROM status WHERE id = ${id}`)
+    return results
+}
