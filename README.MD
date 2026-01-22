@@ -1,3 +1,5 @@
+0 - Criem branches separadas 
+
 1 - Criar um app.use das rotas que vocês irão criar e adicionar o importC
 
 2 - Criar o arquivo de routes e criar as rotas chamando o controller com as funções
