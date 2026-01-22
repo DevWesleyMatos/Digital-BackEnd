@@ -4,8 +4,7 @@ import express from "express"
 export const index = async (req , res ) => {
     try{
          const index = await statusRepository.index()
-         
-         res.status(200).send(index.rows)
+         res.status(200).send(index)
     } catch (error) {
         res.status(500).send(error)
     }
@@ -15,7 +14,7 @@ export const show = async (req , res ) => {
     try{
         let {id} = req.params
          const data = await statusRepository.show(id) 
-         res.status(200).send(data.rows)
+         res.status(200).send(data)
     } catch (error) {
         res.status(500).send(error)
     }

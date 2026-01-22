@@ -1,30 +1,49 @@
-import db from "../config/db.js"
+import prisma from "../config/prisma.js"
 
 export const index = async () => {
-    let results = db.query("SELECT * FROM status")
+    let results = await prisma.status.findMany()
     return results
 }
 
 export const show = async (id) => {
-    let results = db.query(`SELECT * FROM status WHERE id = ${id}`)
+    let results = await prisma.status.findUnique({
+        where: {
+            id: Number(id)
+        }
+    })
     return results
 }
 
 export const create = async (name) => {
-    const results = await db.query(
-            "INSERT INTO status(name) VALUES ($1) RETURNING *",
-            [name]
-        );
+    const results = await prisma.status.create({
+        data: {
+            name
+        }
+    })
     return results
 }
 
-export const update = async (id,name) => {
-    const results = db.query("UPDATE status SET name = ($1) WHERE id = ($2)", [name,id])
+export const update = async (id, name) => {
+    const results = await prisma.status.update({
+        where: {
+            id:Number(id),
+        },
+        data: {
+            name
+        }
+
+    })
     return results
 }
 
 
 export const destroy = async (id) => {
-    const results = await db.query(`DELETE FROM status WHERE id = ${id}`)
+
+
+    const results = await prisma.status.delete({
+        where: {
+            id: Number(id),
+        },
+    })
     return results
 }
