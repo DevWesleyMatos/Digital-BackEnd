@@ -12,3 +12,7 @@
 
 6 - npx prisma generate e npm run dev
 
+7 - Testar as rotas
+
+8 - Fazer o push do projeto
+
