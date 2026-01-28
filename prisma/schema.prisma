@@ -23,3 +23,28 @@ model offers {
   name          String
   value         Decimal
 }
+
+model Product {
+  id       Int             @id @default(autoincrement())
+  name     String
+  price    Decimal
+  orders   ProductOrder[]
+}
+
+model Order {
+  id       Int             @id @default(autoincrement())
+  total    Decimal
+  products ProductOrder[]
+}
+
+model ProductOrder {
+  id         Int     @id @default(autoincrement())
+  productId  Int
+  orderId    Int
+  quantity   Int     @default(1)
+
+  product    Product @relation(fields: [productId], references: [id])
+  order      Order   @relation(fields: [orderId], references: [id])
+
+  @@unique([productId, orderId])
+}

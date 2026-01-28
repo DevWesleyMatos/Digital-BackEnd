@@ -1,15 +1,19 @@
+import express from "express";
+import dotenv from "dotenv";
+import bodyParser from "body-parser";
 
-import express from "express"
-import dotenv from "dotenv"
-import bodyParser from 'body-parser'
-import statusRoutes from "./routes/statusRoutes.js"
-dotenv.config()
-const app = express()
-const PORT = process.env.PORT
-app.use(bodyParser.json())
+import statusRoutes from "./routes/statusRoutes.js";
+import productOrderRoutes from "./routes/productOrderRoutes.js";
 
-app.use("/api",statusRoutes)
+dotenv.config();
+const app = express();
+const PORT = process.env.PORT || 3300;
 
-app.listen(3300, () => {
+app.use(bodyParser.json());
+
+app.use("/api/status", statusRoutes);
+app.use("/api/product-orders", productOrderRoutes);
+
+app.listen(PORT, () => {
     console.log(`Aplicação rodando na porta ${PORT}`);
-})
+});
