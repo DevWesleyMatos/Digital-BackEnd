@@ -1,15 +1,25 @@
+import express from "express";
+import dotenv from "dotenv";
+import bodyParser from "body-parser";
+import cors from "cors";
+import ProductRoutes from "./routes/ProductRoutes.js";
+import MarkRoutes from "./routes/mark.js";
+import CategoryRoutes from "./routes/category.js";
 
-import express from "express"
-import dotenv from "dotenv"
-import bodyParser from 'body-parser'
-import statusRoutes from "./routes/statusRoutes.js"
-dotenv.config()
-const app = express()
-const PORT = process.env.PORT
-app.use(bodyParser.json())
+dotenv.config();
 
-app.use("/api",statusRoutes)
+const app = express();
+const PORT = process.env.PORT || 3300;
 
-app.listen(3300, () => {
-    console.log(`Aplicação rodando na porta ${PORT}`);
-})
+
+app.use(cors()); 
+app.use(bodyParser.json());
+
+
+app.use("/api", MarkRoutes);
+app.use("/api", CategoryRoutes);
+app.use("/api", ProductRoutes);
+
+app.listen(PORT, () => {
+  console.log(`Aplicação rodando na porta ${PORT}`);
+});
