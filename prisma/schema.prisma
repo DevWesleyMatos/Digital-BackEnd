@@ -48,3 +48,12 @@ model ProductOrder {
 
   @@unique([productId, orderId])
 }
+
+model DeliveryAddress {
+  id            Int     @id @default(autoincrement())
+  address       String? @db.VarChar(100)
+  city          String? @db.VarChar(100)
+  zip_code      String? @db.VarChar(20)
+  state         String? @db.VarChar(40)
+  neighborhood  String? @db.VarChar(50)
+}

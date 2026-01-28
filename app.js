@@ -1,6 +1,7 @@
 import express from "express";
 import dotenv from "dotenv";
 import bodyParser from "body-parser";
+import deliveryAddressRoutes from "./routes/deliveryAddressRoutes.js";
 
 import statusRoutes from "./routes/statusRoutes.js";
 import productOrderRoutes from "./routes/productOrderRoutes.js";
@@ -13,6 +14,8 @@ app.use(bodyParser.json());
 
 app.use("/api/status", statusRoutes);
 app.use("/api/product-orders", productOrderRoutes);
+app.use("/api/status", deliveryAddressRoutes);
+
 
 app.listen(PORT, () => {
     console.log(`Aplicação rodando na porta ${PORT}`);
