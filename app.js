@@ -4,7 +4,7 @@ import bodyParser from "body-parser";
 import cors from "cors";
 import ProductRoutes from "./routes/ProductRoutes.js";
 import MarkRoutes from "./routes/mark.js";
-import CategoryRoutes from "./routes/category.js";
+import CategoryRoutes from "./routes/categoryRoutes.js";
 
 dotenv.config();
 
