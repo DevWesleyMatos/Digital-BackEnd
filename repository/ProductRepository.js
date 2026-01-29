@@ -1,12 +1,12 @@
 import prisma from "../config/prisma.js"
 
 export const index = async () => {
-    let results = await prisma.status.findMany()
+    let results = await prisma.product.findMany()
     return results
 }
 
 export const show = async (id) => {
-    let results = await prisma.status.findUnique({
+    let results = await prisma.product.findUnique({
         where: {
             id: Number(id)
         }
@@ -14,17 +14,13 @@ export const show = async (id) => {
     return results
 }
 
-export const create = async (name) => {
-    const results = await prisma.status.create({
-        data: {
-            name
-        }
-    })
+export const create = async (data) => {
+    const results = await prisma.product.create({data})
     return results
 }
 
 export const update = async (id, name) => {
-    const results = await prisma.status.update({
+    const results = await prisma.product.update({
         where: {
             id:Number(id),
         },
@@ -40,7 +36,7 @@ export const update = async (id, name) => {
 export const destroy = async (id) => {
 
 
-    const results = await prisma.status.delete({
+    const results = await prisma.product.delete({
         where: {
             id: Number(id),
         },
