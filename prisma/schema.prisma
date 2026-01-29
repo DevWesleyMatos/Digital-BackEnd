@@ -7,10 +7,10 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Category {
+model category {
   id       Int       @id @default(autoincrement())
   name     String    @db.VarChar(100)
-  @@map("categories")
+  @@map("category")
   
 }
 model status {
@@ -25,9 +25,43 @@ model mark {
 
   @@map("marks")
 }
+
 model offers {
-	id        Int     @id @default(autoincrement())
-	name      String
-	value     Decimal
+  id            Int   @id @default(autoincrement())
+  name          String
+  value         Decimal
 }
 
+model Product {
+  id       Int             @id @default(autoincrement())
+  name     String
+  price    Decimal
+  orders   ProductOrder[]
+}
+
+model Order {
+  id       Int             @id @default(autoincrement())
+  total    Decimal
+  products ProductOrder[]
+}
+
+model ProductOrder {
+  id         Int     @id @default(autoincrement())
+  productId  Int
+  orderId    Int
+  quantity   Int     @default(1)
+
+  product    Product @relation(fields: [productId], references: [id])
+  order      Order   @relation(fields: [orderId], references: [id])
+
+  @@unique([productId, orderId])
+}
+
+model DeliveryAddress {
+  id            Int     @id @default(autoincrement())
+  address       String? @db.VarChar(100)
+  city          String? @db.VarChar(100)
+  zip_code      String? @db.VarChar(20)
+  state         String? @db.VarChar(40)
+  neighborhood  String? @db.VarChar(50)
+}
