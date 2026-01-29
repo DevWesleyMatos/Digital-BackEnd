@@ -10,9 +10,6 @@ datasource db {
 model Category {
   id       Int       @id @default(autoincrement())
   name     String    @db.VarChar(100)
-
-  products Product[]
-
   @@map("categories")
   
 }
@@ -25,27 +22,12 @@ model mark {
   id          Int     @id @default(autoincrement())
   name        String
   image_url   String
-  
-  products Product[]
 
   @@map("marks")
 }
-
-model Product {
-  id          Int      @id @default(autoincrement())
-  name        String   @db.VarChar(100)
-  description String?  @db.VarChar(100)
-  size        String?  @db.VarChar(100)
-  color       String?  @db.VarChar(100)
-  price       Decimal  @db.Decimal(8,2)
-  rate        Int?
-  ref         String?  @db.VarChar(100)
-
-  markId      Int
-  categoryId  Int
-
-  mark        Mark     @relation(fields: [markId], references: [id])
-  category    Category @relation(fields: [categoryId], references: [id])
-
-  @@map("products")
+model offers {
+	id        Int     @id @default(autoincrement())
+	name      String
+	value     Decimal
 }
+

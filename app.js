@@ -5,6 +5,7 @@ import cors from "cors";
 import ProductRoutes from "./routes/ProductRoutes.js";
 import MarkRoutes from "./routes/mark.js";
 import CategoryRoutes from "./routes/category.js";
+import OffersRoutes from "./routes/offersRoutes.js"
 
 dotenv.config();
 
@@ -18,6 +19,7 @@ app.use(bodyParser.json());
 app.use("/api", MarkRoutes);
 app.use("/api", CategoryRoutes);
 app.use("/api", ProductRoutes);
+app.use("/api", OffersRoutes);
 
 app.listen(PORT, () => {
   console.log(`Aplicação rodando na porta ${PORT}`);
