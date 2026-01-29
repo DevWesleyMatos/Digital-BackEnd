@@ -14,7 +14,7 @@ app.use(bodyParser.json());
 
 app.use("/api/status", statusRoutes);
 app.use("/api/product-orders", productOrderRoutes);
-app.use("/api/status", deliveryAddressRoutes);
+app.use("/api/delivery-address", deliveryAddressRoutes);
 
 
 app.listen(PORT, () => {
