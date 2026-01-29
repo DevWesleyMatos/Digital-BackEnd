@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 import bodyParser from "body-parser";
 import cors from "cors";
 import ProductRoutes from "./routes/ProductRoutes.js";
-import MarkRoutes from "./routes/mark.js";
+import MarkRoutes from "./routes/markRoutes.js";
 import OffersRoutes from "./routes/offersRoutes.js"
 import CategoryRoutes from "./routes/categoryRoutes.js";
 import productOrderRoutes from "./routes/productOrderRoutes.js";
