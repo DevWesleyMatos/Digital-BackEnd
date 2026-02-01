@@ -3,10 +3,10 @@ import * as offersController from "../controller/offersController.js";
 
 const router = Router();
 
-router.get('/offers', offersController.index);
-router.get('/offers/:id', offersController.show);
-router.post('/offers', offersController.create);
-router.put('/offers/:id', offersController.update);
-router.delete('/offers/:id', offersController.destroy);
+router.get('/', offersController.index);
+router.get('/:id', offersController.show);
+router.post('/', offersController.create);
+router.put('/:id', offersController.update);
+router.delete('/:id', offersController.destroy);
 
 export default router;

@@ -8,6 +8,8 @@ import OffersRoutes from "./routes/offersRoutes.js"
 import CategoryRoutes from "./routes/categoryRoutes.js";
 import productOrderRoutes from "./routes/productOrderRoutes.js";
 import deliveryAddressRoutes from "./routes/deliveryAddressRoutes.js";
+import PaymentRoutes from "./routes/paymentRoutes.js";
+import UsersRoutes from "./routes/usersRoutes.js";
 dotenv.config();
 
 const app = express();
@@ -18,10 +20,14 @@ app.use(bodyParser.json());
 
 app.use("/api/product-orders", productOrderRoutes);
 app.use("/api/delivery-address", deliveryAddressRoutes);
-app.use("/api", MarkRoutes);
-app.use("/api", CategoryRoutes);
-app.use("/api", ProductRoutes);
-app.use("/api", OffersRoutes);
+app.use("/api/marks", MarkRoutes);
+app.use("/api/categories", CategoryRoutes);
+app.use("/api/products", ProductRoutes);
+app.use("/api/offers", OffersRoutes);
+app.use("/api/payment-methods", PaymentRoutes);
+app.use("/api/users", UsersRoutes);
+
+
 
 app.listen(PORT, () => {
   console.log(`Aplicação rodando na porta ${PORT}`);

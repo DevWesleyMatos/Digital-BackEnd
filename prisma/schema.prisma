@@ -7,61 +7,124 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model category {
-  id       Int       @id @default(autoincrement())
-  name     String    @db.VarChar(100)
-  @@map("category")
-  
+model User {
+  id          Int              @id @default(autoincrement())
+  name        String           @db.VarChar(100)
+  mail        String           @unique @db.VarChar(100)
+  password    String           @db.VarChar(100)
+  cpf         String           @db.VarChar(20)
+  cellphone   String           @db.VarChar(30)
+  deliveryId  Int?
+  delivery    DeliveryAddress? @relation(fields: [deliveryId], references: [id])
+  orders      Order[]
+
+  @@map("users")
 }
+
+model PaymentMethod {
+  id              Int       @id @default(autoincrement())
+  name            String    @db.VarChar(100)
+  ccv             String?   @db.VarChar(10)
+  expiration_date DateTime? @db.Date
+  card_number     String?   @db.VarChar(40)
+  pix_key         String?   @db.VarChar(50)
+  holder_name     String?   @db.VarChar(100)
+  bar_code        String?   @db.VarChar(255)
+  orders          Order[]
+
+  @@map("payment_method")
+}
+
+model Order {
+  id                Int            @id @default(autoincrement())
+  number            String         @db.VarChar(100)
+  value             Decimal        @db.Decimal(10, 2)
+  userId            Int
+  deliveryId        Int
+  purchase_date     DateTime       @default(now())
+  delivery_date     DateTime?
+  paymentMethodId   Int
+  statusId          Int
+  
+  user              User           @relation(fields: [userId], references: [id])
+  delivery          DeliveryAddress @relation(fields: [deliveryId], references: [id])
+  paymentMethod     PaymentMethod  @relation(fields: [paymentMethodId], references: [id])
+  status            status         @relation(fields: [statusId], references: [id])
+  products          ProductOrder[]
+
+  @@map("orders")
+}
+
+model DeliveryAddress {
+  id           Int      @id @default(autoincrement())
+  address      String?  @db.VarChar(100)
+  city         String?  @db.VarChar(100)
+  zip_code     String?  @db.VarChar(20)
+  state        String?  @db.VarChar(40)
+  neighborhood String?  @db.VarChar(50)
+  users        User[]
+  orders       Order[]
+
+  @@map("delivery_address")
+}
+
 model status {
-  id      Int     @id @default(autoincrement())
-  name    String
+  id     Int     @id @default(autoincrement())
+  name   String? @db.VarChar(100)
+  orders Order[]
 }
 
 model mark {
-  id          Int     @id @default(autoincrement())
-  name        String
-  image_url   String
+  id        Int       @id @default(autoincrement())
+  name      String?   @db.VarChar(100)
+  image_url String?   @db.VarChar(100)
+  products  Product[]
 
   @@map("marks")
 }
 
-model offers {
-  id            Int   @id @default(autoincrement())
-  name          String
-  value         Decimal
+model category {
+  id       Int       @id @default(autoincrement())
+  name     String?   @db.VarChar(100)
+  products Product[]
 }
 
 model Product {
-  id       Int             @id @default(autoincrement())
-  name     String
-  price    Decimal
-  orders   ProductOrder[]
-}
+  id          Int            @id @default(autoincrement())
+  name        String         @db.VarChar(100)
+  description String?        @db.VarChar(100)
+  markId      Int
+  categoryId  Int
+  size        String?        @db.VarChar(100)
+  color       String?        @db.VarChar(100)
+  price       Decimal?       @db.Decimal(8, 2)
+  rate        Int?
+  ref         String?        @db.VarChar(100)
+  category    category       @relation(fields: [categoryId], references: [id])
+  mark        mark           @relation(fields: [markId], references: [id])
+  orders      ProductOrder[]
 
-model Order {
-  id       Int             @id @default(autoincrement())
-  total    Decimal
-  products ProductOrder[]
+  @@map("products")
 }
 
 model ProductOrder {
-  id         Int     @id @default(autoincrement())
-  productId  Int
-  orderId    Int
-  quantity   Int     @default(1)
+  id        Int     @id @default(autoincrement())
+  productId Int
+  orderId   Int
+  product   Product @relation(fields: [productId], references: [id])
+  order     Order   @relation(fields: [orderId], references: [id])
 
-  product    Product @relation(fields: [productId], references: [id])
-  order      Order   @relation(fields: [orderId], references: [id])
-
-  @@unique([productId, orderId])
+  @@map("product_order")
 }
 
-model DeliveryAddress {
-  id            Int     @id @default(autoincrement())
-  address       String? @db.VarChar(100)
-  city          String? @db.VarChar(100)
-  zip_code      String? @db.VarChar(20)
-  state         String? @db.VarChar(40)
-  neighborhood  String? @db.VarChar(50)
+model offers {
+  id    Int      @id @default(autoincrement())
+  name  String?  @db.VarChar(100)
+  value Decimal? @db.Decimal(3, 2)
+}
+
+model roles {
+  id   Int    @id @default(autoincrement())
+  nome String @db.VarChar(100)
+  type String @db.VarChar(100)
 }
